@@ -74,7 +74,7 @@ render_compass(st.session_state.map_bearing)
 # ==================================================
 # Google Maps API
 # ==================================================
-API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY",)
+API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY")
 gmaps = googlemaps.Client(key=API_KEY)
 
 # ==================================================
@@ -107,7 +107,7 @@ def load_spot_data(file_name):
     return df
 
 def load_review_image(naming_value):
-    base_path = r"C:\Users\Owner\SISUTEMU\images"
+    base_path = "images"
     if not naming_value or str(naming_value) == "nan":
         return None
     target_filename = f"{str(naming_value).strip()}.jpg"
@@ -335,4 +335,5 @@ if st.session_state.search:
                             if st.button("詳細を見る", key=f"out_btn_{s['label']}"):
                                 st.session_state.selected_spot = s
                                 st.rerun()
+
 

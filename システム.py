@@ -74,7 +74,7 @@ render_compass(st.session_state.map_bearing)
 # ==================================================
 # Google Maps API
 # ==================================================
-API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY","AIzaSyDreCzBroIiwfSnraoJid5upeCnJxLs7TA")
+API_KEY = os.environ.get("GOOGLE_MAPS_API_KEY",)
 gmaps = googlemaps.Client(key=API_KEY)
 
 # ==================================================
@@ -335,3 +335,4 @@ if st.session_state.search:
                             if st.button("詳細を見る", key=f"out_btn_{s['label']}"):
                                 st.session_state.selected_spot = s
                                 st.rerun()
+

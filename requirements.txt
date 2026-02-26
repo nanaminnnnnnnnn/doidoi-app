@@ -1,0 +1,9 @@
+streamlit
+pandas
+pillow
+googlemaps
+pydeck
+geopy
+streamlit-geolocation
+numpy
+openpyxl

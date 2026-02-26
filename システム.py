@@ -68,19 +68,31 @@ def load_spot_data(file_name):
     return df
 
 
-# load_review_image 関数内を以下のように修正
 def load_review_image(naming_value):
-    # アプリが動いている場所の images フォルダを自動で指定
-    base_path = os.path.join(os.path.dirname(__file__), "images")
+    # プログラムがある場所（ルート）
+    base_path = os.path.dirname(__file__)
     
     if not naming_value or str(naming_value) == "nan":
         return None
 
     target_filename = f"{str(naming_value).strip()}.jpg"
-    full_path = os.path.join(base_path, target_filename)
 
-    if os.path.exists(full_path):
-        return Image.open(full_path)
+    # --- 探す場所のリスト ---
+    # 1. imagesフォルダの中 (今のGitHubの構成)
+    # 2. images/images フォルダの中 (さっきまでなっていた構成)
+    # 3. システム.pyと同じ場所 (画像が外に出てしまっている場合)
+    possible_paths = [
+        os.path.join(base_path, "images", target_filename),
+        os.path.join(base_path, "images", "images", target_filename),
+        os.path.join(base_path, target_filename)
+    ]
+
+    for path in possible_paths:
+        if os.path.exists(path):
+            return Image.open(path)
+    
+    # どこにもなかった場合、画面にエラーを出して原因を突き止める
+    st.error(f"⚠️ 画像が見つかりません: {target_filename}")
     return None
 
 
@@ -292,4 +304,5 @@ if st.session_state.search:
                     st.markdown(f"{s['label']} ")
                     if st.button("詳細を見る", key=f"out_btn_{s['label']}"):
                         st.session_state.selected_spot = s
+
                         st.rerun()
